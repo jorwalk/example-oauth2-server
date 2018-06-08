@@ -1,18 +1,24 @@
-<p>{{grant.client.client_name}} is requesting:
-<strong>{{ grant.request.scope }}</strong>
-</p>
+{% extends 'base.html' %}
+{% block content %}
+<section class="mx-auto">
+    <p class="lead">{{grant.client.client_name}}</p>
+    <form class="mt-2" method="post">
+      {% if not user %}
+      <div class="form-group mt-3">
+        <label for="username">Enter your username.</label>
+        <input class="form-control" type="text" name="username">
+      </div>
+      {% endif %}
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" name="confirm">
+        <label class="form-check-label" for="confirm">
+          Allow access to wallets
+        </label>
+      </div>
+      <div class="form-group mt-3">
+        <button class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+</section>
 
-<form action="" method="post">
-  <label>
-    <input type="checkbox" name="confirm">
-    <span>Consent?</span>
-  </label>
-  {% if not user %}
-  <p>You haven't logged in. Log in with:</p>
-  <div>
-    <input type="text" name="username">
-  </div>
-  {% endif %}
-  <br>
-  <button>Submit</button>
-</form>
+{% endblock %}

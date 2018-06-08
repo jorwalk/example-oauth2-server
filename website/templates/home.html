@@ -1,20 +1,67 @@
+{% extends 'base.html' %}
+{% block header %}
+<div class="col-12">
+  {% if user %}
+    <h1>Logged in as {{user}}</h1>
+    <a href="{{ url_for('.logout') }}">
+      <small>Log Out</small>
+    </a>
+  {% else %}
+    <h1>{% block title %}Please Sign In{% endblock %}</h1>
+  {% endif %}
+</div>
+{% endblock %}
+{% block content %}
 {% if user %}
-<style>pre{white-space:wrap}</style>
-<div>Logged in as <strong>{{user}}</strong> (<a href="{{ url_for('.logout') }}">Log Out</a>)</div>
-
+<div class="col-12">
+  <a class="btn btn-primary" href="{{ url_for('.create_client') }}">Create Application</a>
+</div>
+<div class="col-12 mt-5">
+  <div class="table-responsive">
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Client ID</th>
+      <th scope="col">Client Secret</th>
+    </tr>
+  </thead>
+  <tbody>
 {% for client in clients %}
-<pre>
+  <tr>
+     <td>{{ client.client_info.client_id }}</td>
+     <td>{{ client.client_info.client_secret }}</td>
+   </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% for client in clients %}
+<code>
 {{ client.client_info|tojson }}
 {{ client.client_metadata|tojson }}
-</pre>
+</code>
 <hr>
 {% endfor %}
-
-<br><a href="{{ url_for('.create_client') }}">Create Client</a>
-
+</div>
+</div>
 {% else %}
-<form action="" method="post">
-  <input type="text" name="username" placeholder="username">
-  <button type="submit">Login / Signup</button>
-</form>
+  <form class="col-12" method="post">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input class="form-control" type="text" name="username">
+    </div>
+    <div class="form-group">
+      <label for="username">Password</label>
+      <input class="form-control" type="password" name="password">
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary">Login</button>
+    </div>
+  </form>
 {% endif %}
+</div>
+
+
+{% if user %}
+{% else %}
+{% endif %}
+{% endblock %}
